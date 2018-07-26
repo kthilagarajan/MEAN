@@ -1,0 +1,26 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+    font-style: oblique !important;
+}
+
+.padding-none {
+    padding: 0px;
+}
+
+.content-header {
+    text-align: center;
+    border-top: 1px dashed #ccc;
+    padding-top: 10px;
+}
+
+.danger {
+    color: red;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.deco-none {
+    text-decoration: none;
+}

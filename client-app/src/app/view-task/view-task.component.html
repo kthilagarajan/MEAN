@@ -1,0 +1,17 @@
+<h2 class="content-header">List of Tasks</h2>
+
+<h4 *ngIf="task_list.length == 0" class="no-task">No tasks found</h4>
+<ul class="padding-none">
+  <li class="list-item" *ngFor="let taskObj of task_list">
+    <h2>{{taskObj.title}}</h2>
+    <img src="{{taskObj.file}}" width="50" height="50" />
+    <i>{{taskObj.description}}</i>
+    <br/>
+    <i class="actions ">
+
+      <a class="deco-none" [routerLink]="['/edittask', taskObj.taskId]">Edit</a>
+      &nbsp; | &nbsp;
+      <a class="danger" (click)="doDeleteAction(taskObj.taskId)">Delete</a>
+    </i>
+  </li>
+</ul>

@@ -1,0 +1,74 @@
+<div class="content">
+  <div class="flex">
+    <div class="flex-1">
+      <h2 class="signup-header">Signup</h2>
+      <div class="signup">
+        <form novalidate (ngSubmit)="doRegister(registerForm)" [formGroup]="registerForm">
+          <div class="flex">
+            <div class="flex-1">
+              <label for="new_username">Username</label>
+            </div>
+            <div class="flex-1">
+              <input type="text" formControlName="username" name="new_username" />
+            </div>
+          </div>
+          <br/>
+          <div class="flex">
+            <div class="flex-1">
+              <label for="new_password">Password</label>
+            </div>
+            <div class="flex-1">
+              <input type="text" formControlName="password" name="new_password" />
+            </div>
+          </div>
+          <br/>
+          <div class="text-center">
+            <div class="danger" *ngIf="registerForm.get('username').touched && registerForm.get('username').hasError('required')">
+              Username is required
+            </div>
+            <div class="danger" *ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('required')">
+              Password is required
+            </div>
+          </div>
+          <br/>
+          <input [disabled]="registerForm.invalid" type="button" value="Register" />
+        </form>
+      </div>
+    </div>
+    <div class="flex-1">
+      <h2 class="login-header">Login</h2>
+      <div class="login">
+        <form novalidate (ngSubmit)="doLogin(loginForm)" [formGroup]="loginForm">
+          <div class="flex">
+            <div class="flex-1">
+              <label for="username">Username</label>
+            </div>
+            <div class="flex-1">
+              <input type="text" formControlName="username" name="username" />
+            </div>
+          </div>
+          <br/>
+          <div class="flex">
+            <div class="flex-1">
+              <label for="password">Password</label>
+            </div>
+            <div class="flex-1">
+              <input type="text" formControlName="password" name="password" />
+            </div>
+          </div>
+          <br/>
+          <div class="text-center">
+            <div class="danger" *ngIf="loginForm.get('username').touched && loginForm.get('username').hasError('required')">
+              Username is required
+            </div>
+            <div class="danger" *ngIf="loginForm.get('password').touched && loginForm.get('password').hasError('required')">
+              Password is required
+            </div>
+          </div>
+          <br/>
+          <input [disabled]="loginForm.invalid" type="button" value="Login" />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<h2 class="content-header">Edit Task</h2>
+<form novalidate (ngSubmit)="doUpdateTask(taskForm)" class="text-center" [formGroup]="taskForm">
+  <label for="title">Title</label> &nbsp;
+  <input type="text" formControlName="title" name="title" /> &nbsp;
+  <label for="description">Description</label> &nbsp;
+  <input type="text" formControlName="description" name="description" /> &nbsp;
+  <input type="file" (change)="onFileChange($event)" /> &nbsp;
+  <input type="submit" [disabled]="taskForm.invalid" value="Update Task"/>
+  <br/>
+  <br/>
+  <div class="danger" *ngIf="taskForm.get('title').touched && taskForm.get('title').hasError('required')">
+      Title is required
+  </div>
+  <div class="danger" *ngIf="taskForm.get('description').touched && taskForm.get('description').hasError('required')">
+      Description is required
+  </div>
+  <img *ngIf="taskForm.get('file').value" src="{{taskForm.get('file').value}}" width="300" height="300" alt="Upload image"/>
+</form>

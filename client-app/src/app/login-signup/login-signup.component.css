@@ -1,0 +1,26 @@
+.flex {
+  display: flex;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+div.content {
+    padding: 20px;
+    border-radius: 10px;
+    /* border: 1px solid #ccc; */
+    background: linear-gradient(to right, #FFCDD2 45%, #DCEDC8 50%);
+}
+
+.signup-header {
+    border-bottom: 2px dashed #F44336;
+    color: #F44336;
+    padding-bottom: 10px;
+}
+
+.login-header {
+    border-bottom: 2px dashed #81C784;
+    color: #4CAF50;
+    padding-bottom: 10px;
+}
