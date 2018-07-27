@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HTTPService } from '../shared/http.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-login-signup',
@@ -11,7 +12,9 @@ import { Router } from '@angular/router';
 export class LoginSignupComponent implements OnInit {
   registerForm: FormGroup;
   loginForm: FormGroup;
-  constructor(private httpService: HTTPService, private router: Router) { }
+  constructor(private httpService: HTTPService, private router: Router, private authService : AuthService) { 
+    this.authService.isAuthenticated()
+  }
 
   ngOnInit() {
     this.registerForm = new FormGroup({
@@ -27,8 +30,8 @@ export class LoginSignupComponent implements OnInit {
   doLogin({ value, valid }: { value: any, valid: boolean }) {
     this.httpService.login({}, value).subscribe((response: any) => {
       if (response.status) {
-        localStorage.setItem("userToken",response.token)
-        this.router.navigate(["/tasks"])
+        localStorage.setItem("userToken", response.token)
+        this.authService.login()
       } else {
         alert(response.err)
       }

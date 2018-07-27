@@ -1,3 +1,6 @@
+.route {
+    text-align: center;
+}
 
 .route a.active {
     font-weight: bold;
