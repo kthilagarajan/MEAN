@@ -7,7 +7,7 @@ var path = require("path")
 var app = express();
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
-// var passport = require('passport');
+var passport = require('passport');
 var MongoAdapter = require('./modules/mongo-adapter')
 
 /*******************************
@@ -35,10 +35,10 @@ app.get('/', function(req, res){
 
 
 app.use(cookieParser());
-app.use(session({secret: "openkey"}));
-// app.use(passport.initialize());
-// app.use(passport.session()); // persistent login sessions
-// require('./modules/passport')(passport,app);
+app.use(session({secret: "openjwtkey"}));
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+require('./modules/passport')(passport,app);
 
 app.use(function(req, res, next) {
 
@@ -50,7 +50,7 @@ app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
     // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,__setXHR_');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,Authorization,content-type,__setXHR_');
 
     // Set to true if you need the website to include cookies in the requests sent
     // to the API (e.g. in case you use sessions)
@@ -71,6 +71,6 @@ MongoDB.connect(function(db) {
     //Initializing the web routes
     var Tasks = require('./routes/task/task-routes');
     new Tasks(app);
-    // var Users = require('./routes/user/user-routes');
-    // new Users(app);
+    var Users = require('./routes/user/user-routes');
+    new Users(app);
 });

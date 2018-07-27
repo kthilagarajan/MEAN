@@ -4,11 +4,12 @@ const UserModel = require('../routes/user/user-model');
 
 module.exports = function(passport,app){
     let opts = {};
-    let User = new UserModel(app)
+    
     opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt")
     opts.secretOrKey = "openjwtkey";
     passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
-        User.findById(jwt_payload.id, (err, user) => {
+        let User = new UserModel(app)
+        User.findById(jwt_payload._id, (err, user) => {
             if(err){
                 return done(err, false);
             }

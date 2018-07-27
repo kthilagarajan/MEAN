@@ -5,5 +5,7 @@ export class Constants {
   public static ADD_TASK = Constants.API_URL + "/addTask";
   public static UPDATE_TASK = Constants.API_URL + "/updateTask";
   public static DELETE_TASK = Constants.API_URL + "/deleteTask";
+  public static LOGIN = Constants.API_URL + "/login";
+  public static REGISTER = Constants.API_URL + "/register";
 }
 

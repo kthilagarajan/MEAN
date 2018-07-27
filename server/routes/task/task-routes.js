@@ -10,7 +10,7 @@ module.exports = TaskRoutes;
 
 TaskRoutes.prototype.init = function () {
     var self = this;
-
+    var isAuthenticated = passport.authenticate('jwt', { session: false })
     function sessionCheck(req, res, next) {
         if (req.session && req.session.user) {
             next();
@@ -26,35 +26,35 @@ TaskRoutes.prototype.init = function () {
     });
 
     // Add Tasks
-    self.app.post('/addTask', function (req, res) {
+    self.app.post('/addTask', isAuthenticated, function (req, res) {
         self.task.addTask(req, function (response) {
             res.json(response);
         })
     });
 
     // Update Task
-    self.app.put('/updateTask', function (req, res) {
+    self.app.put('/updateTask', isAuthenticated, function (req, res) {
         self.task.updateTask(req, function (response) {
             res.json(response);
         })
     });
 
     // Get All Tasks
-    self.app.get('/getTask/:id', function (req, res) {
+    self.app.get('/getTask/:id', isAuthenticated, function (req, res) {
         self.task.getTask(req, function (response) {
             res.json(response);
         })
     });
 
     // Get single task
-    self.app.get('/getAllTasks', function (req, res) {
+    self.app.get('/getAllTasks',isAuthenticated, function (req, res) {
         self.task.getAllTasks(req,  function (response) {
             res.json(response);
         })
     });
 
     // Delete Tasks
-    self.app.delete('/deleteTask', function (req, res) {
+    self.app.delete('/deleteTask',isAuthenticated, function (req, res) {
         self.task.deleteTask(req, function (response) {
             res.json(response);
         })

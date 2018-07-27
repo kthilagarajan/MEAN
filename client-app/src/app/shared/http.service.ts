@@ -1,52 +1,67 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
+import { Observable, throwError } from 'rxjs';
 import { Constants } from "./constants";
 import { map, catchError } from "rxjs/operators";
 
 @Injectable()
 export class HTTPService {
   headers: Headers;
-  options: RequestOptions;
+  httpParams: HttpParams;
 
-  constructor(private http: Http) {
-    this.headers = new Headers({
-      // "Authorization" : "hello"
-    });
-    this.options = new RequestOptions({ headers: this.headers });
+  constructor(private http: Http, private httpClient: HttpClient) {
+  }
+
+  optionsBuilder(params: Object) {
+    let paramObj = {}
+    for (let pKey in params) {
+      paramObj[pKey] = params[pKey]
+    }
+    return {
+      params: paramObj
+    }
+  }
+
+  login(params: Object, data: any): Observable<any> {
+    return this.httpClient.post(Constants.LOGIN, data, this.optionsBuilder(params))
+      .pipe(map(res => res))
+      .pipe(catchError(this.handleError))
+  }
+
+  register(params: Object, data: any): Observable<any> {
+    return this.httpClient.post(Constants.REGISTER, data, this.optionsBuilder(params))
+      .pipe(map(res => res))
+      .pipe(catchError(this.handleError))
   }
 
   getAllTasks(params: Object): Observable<any> {
-    this.options.params = <URLSearchParams>params;
-    return this.http.get(Constants.GET_ALL_TASKS, this.options)
-      .pipe(map(res => res.json()))
+    return this.httpClient.get(Constants.GET_ALL_TASKS, this.optionsBuilder(params))
+      .pipe(map(res => res))
       .pipe(catchError(this.handleError))
   }
 
   getTask(params: any): Observable<any> {
-    return this.http.get(Constants.GET_TASK+"/"+params.id)
-      .pipe(map(res => res.json()))
+    return this.httpClient.get(Constants.GET_TASK + "/" + params.id, this.optionsBuilder(params))
+      .pipe(map(res => res))
       .pipe(catchError(this.handleError))
   }
 
   addTask(params: Object, data: any): Observable<any> {
-    this.options.params = <URLSearchParams>params;
-    return this.http.post(Constants.ADD_TASK, data, this.options)
-      .pipe(map(res => res.json()))
+    return this.httpClient.post(Constants.ADD_TASK, data, this.optionsBuilder(params))
+      .pipe(map(res => res))
       .pipe(catchError(this.handleError))
   }
 
   updateTask(params: Object, data: any): Observable<any> {
-    this.options.params = <URLSearchParams>params;
-    return this.http.put(Constants.UPDATE_TASK, data, this.options)
-      .pipe(map(res => res.json()))
+    return this.httpClient.put(Constants.UPDATE_TASK, data, this.optionsBuilder(params))
+      .pipe(map(res => res))
       .pipe(catchError(this.handleError))
   }
 
   deleteTask(params: Object): Observable<any> {
-    this.options.params = <URLSearchParams>params;
-    return this.http.delete(Constants.DELETE_TASK, this.options)
-      .pipe(map(res => res.json()))
+    return this.httpClient.delete(Constants.DELETE_TASK, this.optionsBuilder(params))
+      .pipe(map(res => res))
       .pipe(catchError(this.handleError))
   }
 
@@ -54,7 +69,7 @@ export class HTTPService {
     let errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     console.error(errMsg);
-    return Observable.throw(errMsg);
+    return throwError(errMsg);
   }
 
 }

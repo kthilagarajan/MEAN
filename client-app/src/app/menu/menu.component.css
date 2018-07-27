@@ -2,3 +2,7 @@
 .route a.active {
     font-weight: bold;
 }
+
+a{
+    cursor: pointer;
+}
