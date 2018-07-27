@@ -1,0 +1,8 @@
+# DB
+mongod --dbpath data/ --port 2001
+
+# Node (default port 2002)
+nodemon app.js
+
+# Client
+ng serve
